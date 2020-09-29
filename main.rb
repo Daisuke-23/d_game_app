@@ -51,6 +51,9 @@ class Brave
       target = params[:target]
 
       target.hp -= damage
+
+      target.hp = 0 if target.hp < 0
+
       puts "#{target.name}は#{damage}のダメージを受けた"
     end
 
@@ -79,6 +82,7 @@ class Monster
 
   def attack(brave)
     if @hp <= @trigger_of_transform && @transform_flag == false
+
       @transform_flag = true
       transform
     end
@@ -102,6 +106,10 @@ class Monster
       target = params[:target]
 
       target.hp -= damage
+
+      # もしターゲットのHPがマイナスになるなら0を代入
+      target.hp = 0 if target.hp < 0
+
       puts "#{target.name}は#{damage}のダメージを受けた"
     end
 
@@ -124,5 +132,8 @@ monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 
 loop do
   brave.attack(monster)
+  break if monster.hp <= 0
+
   monster.attack(brave)
+  break if brave.hp <= 0
 end
