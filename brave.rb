@@ -44,6 +44,7 @@ class Brave < Character
       target.hp = 0 if target.hp < 0
     end
 
+    
     def calculate_special_attack
       @offense * SPECIAL_ATTACK_CONSTANT
     end
